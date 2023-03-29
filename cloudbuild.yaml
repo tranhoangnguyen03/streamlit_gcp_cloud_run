@@ -11,7 +11,7 @@
    args:
    - 'run'
    - 'deploy'
-   - 'test_environment'
+   - 'test-environment'
    - '--image'
    - 'gcr.io/$PROJECT_ID/test_environment:$COMMIT_SHA'
    - '--region'
