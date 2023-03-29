@@ -37,9 +37,39 @@ def main():
     try:
         import google.auth
         credentials, project_id = google.auth.default() 
-        st.write(f'{credentials=}')
+        st.caption('credentials.__dict__')
+        st.write(f'{credentials.__dict__}')
+        st.caption('dir(credentials)')
+        st.write(f'{dir(credentials)=}')
     except:
         pass
+
+    st.caption('project_id')
+
+    from google.cloud import datacatalog_v1
+    
+    client = datacatalog_v1.DataCatalogClient(credentials=credentials)
+
+    st.write(f'{client=}')
+
+    dc_scope = datacatalog_v1.SearchCatalogRequest.Scope()
+    dc_scope.include_project_ids.append('ocb-data-gov-poc')
+    
+    search_term = 'customer'
+
+    query_en="".join(
+        [
+            f"displayname:'{search_term}'", 
+            f", type={'business_glossary'}",  # system=data_catalog tag:hierarchy
+        ]
+    )
+
+    results_en = client.search_catalog(
+        scope=dc_scope,
+        query=query_en,
+    )
+
+    st.write(results_en._response.results)
 
 if __name__=="__main__":
     main()
