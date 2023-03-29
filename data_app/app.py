@@ -6,7 +6,7 @@ PAGE_CONFIG ={"page_title":app_name,"layout":"wide"}
 st.set_page_config(**PAGE_CONFIG) 
 
 def main():
-    st.headr('Check Environment Variables')
+    st.header('Check Environment Variables')
     st.write(f'{os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")=}')
     st.write(f'{os.environ.get("SECRET_KEY")=}')
     st.write(f'{os.environ.get("PROJECT_ID")=}')
