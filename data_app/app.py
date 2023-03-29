@@ -36,20 +36,19 @@ def main():
     st.header('Check Application Default Credential via google.auth')
     try:
         import google.auth
-        credentials, project_id = google.auth.default() 
+        credentials, project_id = google.auth.default()
+        st.code('credentials, project_id = google.auth.default()')
+        st.text(f'{credentials=} \n{project_id=}')
         st.caption('credentials.__dict__')
-        st.write(f'{credentials.__dict__}')
-        st.caption('dir(credentials)')
-        st.write(f'{dir(credentials)=}')
+        st.text(f'{credentials.__dict__}')
     except:
         pass
-
-    st.caption('project_id')
 
     from google.cloud import datacatalog_v1
     
     client = datacatalog_v1.DataCatalogClient(credentials=credentials)
 
+    st.code('client = datacatalog_v1.DataCatalogClient(credentials=credentials)')
     st.write(f'{client=}')
 
     dc_scope = datacatalog_v1.SearchCatalogRequest.Scope()
@@ -69,7 +68,21 @@ def main():
         query=query_en,
     )
 
-    st.write(results_en._response.results)
+    st.code(
+'''query_en="".join(
+    [
+        f"displayname:'{search_term}'", 
+        f", type={'business_glossary'}",  # system=data_catalog tag:hierarchy
+    ]
+)
+    
+results_en = (
+    client.search_catalog(scope=dc_scope,query=query_en)
+        ._response
+        .results[0]
+)
+''')
+    st.write(results_en._response.results[0])
 
 if __name__=="__main__":
     main()
