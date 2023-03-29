@@ -1,6 +1,6 @@
 FROM python:3.9.4
 
-EXPOSE 8501
+EXPOSE 8080
 
 WORKDIR /data_app
 
@@ -12,4 +12,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD ["streamlit", "run", "app.py", "--server.port", "8501","--server.enableCORS", "false"]
+CMD ["streamlit", "run", "app.py", "--server.port", "8080","--server.enableCORS", "false"]
