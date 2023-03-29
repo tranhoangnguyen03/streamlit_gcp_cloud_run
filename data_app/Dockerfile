@@ -1,20 +1,15 @@
-FROM python:3.7.2
+FROM python:3.9.4
 
-RUN pip install --upgrade pip
+EXPOSE 8501
 
-WORKDIR /app
+WORKDIR /data_app
+
+RUN apt-get update
 
 COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
-RUN pip install --no-cache-dir -r  requirements.txt 
+COPY . .
 
-
-ENV PORT=
-
-
-COPY app.py . 
-COPY utils.py . 
-COPY data  ./data/
-
-CMD streamlit run app.py --server.port=${PORT}  --browser.serverAddress="0.0.0.0"
-
+CMD ["streamlit", "run", "app.py", "--server.port", "8501","--server.enableCORS", "false"]
